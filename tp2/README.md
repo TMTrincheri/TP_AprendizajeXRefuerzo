@@ -1,4 +1,5 @@
-En el siguiente tp, en nuestro mayor esfuerzo por comprender y aprender las técnicas de RL vistas en clase recreamos el juego del snake utilizando Open-CV basandonos en el siguiente repo de github https://github.com/TheAILearner/Snake-Game-using-OpenCV-Python
+En el siguiente tp, en nuestro mayor esfuerzo por comprender y aprender las técnicas de RL vistas en clase recreamos el juego del snake utilizando Open-CV basandonos en el siguiente repo de github https://github.com/TheAILearner/Snake-Game-using-OpenCV-Python.
+
 A partir del mismo buscamos implementar un modelo de aprendizaje por refuerzos visto en clase y transformar el juego en un entorno de stable-baselines esto lo hicimos apoyandonos en los tutoriales de sentdex creador de contenido en youtube sobre python e inteligencia artificial. 
 link al canal: https://www.youtube.com/@sentdex
 
@@ -11,6 +12,6 @@ El paso siguiente es encapsular en un conteiner de docker todo el programa y las
 
 Sin más esperamos que sea correcto y cualquier corrección o sugerencia de mejora se agradece. Gracias y saludos
 
-Tania Trincheri
-Pedro Bonafé
+*Tania Trincheri*
+*Pedro Bonafé*
 
