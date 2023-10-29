@@ -7,9 +7,10 @@ link al canal: https://www.youtube.com/@sentdex
 
 ## Problemas y errores 
 Estuvimos teniendo algunos problemas vinculados al uso de gymnasium puntualmente por la necesidad de instalar el paquete box2d que al querer ejecutar la linea:
+```
     pip3 install gym[box2d]   
     pip3 install gymnasium[box2d]   # probamos tanto con gym como con gymnasium
-
+```
 Nos saltaba el error de no poseer las weels. Buscando en stackoverflow vimos que necesitabamos instalar el paquete swing pero aun instalándolo esto no se solucionó. Intentamos también levantar una máquina virtual con virtualbox pero ocurrieron problemas vinculados al espacio en la computadora en que se ejecutó. 
 
 ## Proximos pasos
