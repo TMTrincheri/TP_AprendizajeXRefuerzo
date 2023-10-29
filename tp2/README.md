@@ -16,7 +16,9 @@ Nos saltaba el error de no poseer las weels. Buscando en stackoverflow vimos que
 ## Proximos pasos
 El paso siguiente es encapsular en un conteiner de docker todo el programa y las herramientas necesarias para poder usarlo así se puede disponibilizar en cualquier ambiente.
 
-Sin más esperamos que sea correcto y cualquier corrección o sugerencia de mejora se agradece. Gracias y saludos
+Sin más esperamos que sea correcto y cualquier corrección o sugerencia de mejora se agradece. 
+
+Gracias y saludos
 
 *Tania Trincheri y Pedro Bonafé*
 
