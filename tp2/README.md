@@ -17,5 +17,5 @@ El paso siguiente es encapsular en un conteiner de docker todo el programa y las
 
 Sin más esperamos que sea correcto y cualquier corrección o sugerencia de mejora se agradece. Gracias y saludos
 
-*Tania Trincheri* *Pedro Bonafé*
+*Tania Trincheri y Pedro Bonafé*
 
