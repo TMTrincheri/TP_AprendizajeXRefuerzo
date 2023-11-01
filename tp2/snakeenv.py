@@ -22,7 +22,7 @@ SNAKE_LEN_GOAL = 30
 
 def collision_with_apple(apple_position, score):
     apple_position = [random.randrange(1,50)*10,random.randrange(1,50)*10]
-    score += 1
+    score += 10
     return apple_position, score
 
 def collision_with_boundaries(snake_head):
@@ -106,11 +106,16 @@ class SnakeEnv(gym.Env):
             cv2.putText(img,'Your Score is {}'.format(self.score),(140,250), font, 1,(255,255,255),2,cv2.LINE_AA)
             cv2.imshow('a',img)
             self.done = True
+            self.truncated = True
+
+        #self.total_reward = len(self.snake_position) - 3  # default length is 3
+        #self.reward = self.total_reward - self.prev_reward
+        #self.prev_reward = self.total_reward
 
         if self.done:
-            self.reward = -10
+            self.reward = self.score -10
         else: 
-            self.reward = self.score * 10
+            self.reward = self.score 
 
 
         head_x = self.snake_head[0]
@@ -127,11 +132,12 @@ class SnakeEnv(gym.Env):
 
         info ={}
 
-        return self.observation, self.reward, self.done, info
+        return self.observation, self.reward, self.done, self.truncated, info
 
 
-    def reset(self):
+    def reset(self, seed = None):
         self.done = False
+        self.truncated = False
         self.img = np.zeros((500,500,3),dtype='uint8')
         # Initial Snake and Apple position
         self.snake_position = [[250,250],[240,250],[230,250]]
@@ -151,6 +157,7 @@ class SnakeEnv(gym.Env):
 
         snake_length = len(self.snake_position)
 
+
         self.prev_actions = deque(maxlen=SNAKE_LEN_GOAL)
 
         for _ in range(SNAKE_LEN_GOAL):
@@ -159,4 +166,6 @@ class SnakeEnv(gym.Env):
         self.observation = [head_x, head_y, apple_delta_x, apple_delta_y, snake_length] + list(self.prev_actions)
         self.observation = np.array(self.observation)
 
-        return self.observation
+        self.info = {} #tratamos de ver de solucionar el error
+
+        return self.observation, self.info

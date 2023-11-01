@@ -1,7 +1,7 @@
 import stable_baselines3
 import torch
 import gymnasium
-from stable_baselines3 import PPO
+from stable_baselines3 import PPO, DQN
 import os
 import time
 from snakeenv import SnakeEnv
@@ -19,7 +19,7 @@ if not os.path.exists(logdir):
 env = SnakeEnv()
 env.reset()
 
-model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=logdir, seed=40)
+model = DQN("MlpPolicy", env, verbose=1, tensorboard_log=logdir, seed=40)
 
 TIMESTEPS = 10000
 for i in range(1,100000000):
