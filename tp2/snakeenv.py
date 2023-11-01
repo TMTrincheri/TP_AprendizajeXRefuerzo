@@ -20,9 +20,9 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnRewar
 
 SNAKE_LEN_GOAL = 30
 
-def collision_with_apple(apple_position, score, num_apples):
+def collision_with_apple(apple_position, score):
     apple_position = [random.randrange(1,50)*10,random.randrange(1,50)*10]
-    score += 10**num_apples
+    score += 10
     return apple_position, score
 
 def collision_with_boundaries(snake_head):
@@ -91,13 +91,11 @@ class SnakeEnv(gym.Env):
             self.snake_head[1] -= 10
 
         apple_reward = 0
-        num_apples = 1 #partimos de 1 para no hacer e**0
         # Increase Snake length on eating apple
         if self.snake_head == self.apple_position:
-            self.apple_position, self.score = collision_with_apple(self.apple_position, self.score, num_apples= num_apples)
+            self.apple_position, self.score = collision_with_apple(self.apple_position, self.score)
             self.snake_position.insert(0,list(self.snake_head))
             apple_reward = 10000
-            num_apples +=1
 
         else:
             self.snake_position.insert(0,list(self.snake_head))
