@@ -20,9 +20,9 @@ from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnRewar
 
 SNAKE_LEN_GOAL = 30
 
-def collision_with_apple(apple_position, score):
+def collision_with_apple(apple_position, score, num_apples):
     apple_position = [random.randrange(1,50)*10,random.randrange(1,50)*10]
-    score += 10
+    score += 10**num_apples
     return apple_position, score
 
 def collision_with_boundaries(snake_head):
@@ -67,11 +67,11 @@ class SnakeEnv(gym.Env):
             cv2.rectangle(self.img,(position[0],position[1]),(position[0]+10,position[1]+10),(0,255,0),3)
         
         # Takes step after fixed time
-        t_end = time.time() + 0.2
+        t_end = time.time() + 0.02
         k = -1
         while time.time() < t_end:
             if k == -1:
-                k = cv2.waitKey(125)
+                k = cv2.waitKey(1)
             else:
                 continue
                 
@@ -90,10 +90,14 @@ class SnakeEnv(gym.Env):
         elif action == 3:
             self.snake_head[1] -= 10
 
+        apple_reward = 0
+        num_apples = 1 #partimos de 1 para no hacer e**0
         # Increase Snake length on eating apple
         if self.snake_head == self.apple_position:
-            self.apple_position, self.score = collision_with_apple(self.apple_position, self.score)
+            self.apple_position, self.score = collision_with_apple(self.apple_position, self.score, num_apples= num_apples)
             self.snake_position.insert(0,list(self.snake_head))
+            apple_reward = 10000
+            num_apples +=1
 
         else:
             self.snake_position.insert(0,list(self.snake_head))
@@ -108,14 +112,18 @@ class SnakeEnv(gym.Env):
             self.done = True
             self.truncated = True
 
+        euclidean_dist_to_apple = np.linalg.norm(np.array(self.snake_head) - np.array(self.apple_position))
+        self.total_reward = ((250 - euclidean_dist_to_apple) + apple_reward)/100
+
+        print(self.total_reward)
         #self.total_reward = len(self.snake_position) - 3  # default length is 3
-        #self.reward = self.total_reward - self.prev_reward
-        #self.prev_reward = self.total_reward
+        self.reward = self.total_reward - self.prev_reward
+        self.prev_reward = self.total_reward
 
         if self.done:
-            self.reward = self.score -10
-        else: 
-            self.reward = self.score 
+            self.reward -= 10
+#        else: 
+#            self.reward = self.score 
 
 
         head_x = self.snake_head[0]
@@ -132,7 +140,7 @@ class SnakeEnv(gym.Env):
 
         info ={}
 
-        return self.observation, self.reward, self.done, self.truncated, info
+        return self.observation, self.total_reward, self.done, self.truncated, info
 
 
     def reset(self, seed = None):
@@ -144,6 +152,7 @@ class SnakeEnv(gym.Env):
         self.apple_position = [random.randrange(1,50)*10,random.randrange(1,50)*10]
         self.score = 0
         self.reward = 0
+        self.prev_reward = 0
         self.prev_button_direction = 1
         self.button_direction = 1
         self.snake_head = [250,250]

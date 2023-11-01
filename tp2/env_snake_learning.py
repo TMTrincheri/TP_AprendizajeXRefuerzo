@@ -6,8 +6,8 @@ import os
 import time
 from snakeenv import SnakeEnv
 
-models_dir = f"models/PPO-{int(time.time())}"
-logdir = f"logs/PPO-{int(time.time())}"
+models_dir = f"training1/models/PPO-{int(time.time())}"
+logdir = f"training1/logs/PPO-{int(time.time())}"
 
 if not os.path.exists(models_dir):
     os.makedirs(models_dir)
@@ -19,7 +19,7 @@ if not os.path.exists(logdir):
 env = SnakeEnv()
 env.reset()
 
-model = DQN("MlpPolicy", env, verbose=1, tensorboard_log=logdir, seed=40)
+model = PPO("MlpPolicy", env, verbose=1, tensorboard_log=logdir)
 
 TIMESTEPS = 10000
 for i in range(1,100000000):
